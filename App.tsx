@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+/* import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -112,6 +112,81 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+});
+
+export default App;
+ */
+
+/* import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Calendario from './Sapo/Calendario';
+import EmotionTracker from './Sapo/EmotionTracker';
+
+const App = () => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [emotions, setEmotions] = useState({});
+
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date.toISOString().split('T')[0]);
+  };
+
+  const handleSaveEmotion = (date: string, emotion: string) => {
+    setEmotions({ ...emotions, [date]: emotion });
+  };
+
+  return (
+    <View style={styles.container}>
+      <Calendario emotions={emotions} onDateSelect={handleDateSelect} />
+      {selectedDate && (
+        <EmotionTracker selectedDate={selectedDate} onSaveEmotion={handleSaveEmotion} />
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default App; */
+
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Calendario from './Sapo/Calendario';
+import EmotionTracker from './Sapo/EmotionTracker';
+
+const App = () => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [emotions, setEmotions] = useState({});
+
+  const handleDateSelect = (date: string) => {
+    setSelectedDate(date);
+  };
+
+  const handleSaveEmotion = (date: string, emotion: string) => {
+    setEmotions({ ...emotions, [date]: emotion });
+  };
+
+  return (
+    <View style={styles.container}>
+      <Calendario emotions={emotions} onDateSelect={handleDateSelect} />
+      {selectedDate && (
+        <EmotionTracker selectedDate={selectedDate} onSaveEmotion={handleSaveEmotion} />
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
