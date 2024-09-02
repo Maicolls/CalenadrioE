@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
 
 export default App; */
 
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Calendario from './Sapo/Calendario';
 import EmotionTracker from './Sapo/EmotionTracker';
@@ -172,6 +172,63 @@ const App = () => {
     setEmotions({ ...emotions, [date]: emotion });
   };
 
+  return (
+    <View style={styles.container}>
+      <Calendario emotions={emotions} onDateSelect={handleDateSelect} />
+      {selectedDate && (
+        <EmotionTracker selectedDate={selectedDate} onSaveEmotion={handleSaveEmotion} />
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default App; */
+
+
+
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Calendario from './Sapo/Calendario';
+import EmotionTracker from './Sapo/EmotionTracker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const App = () => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);//Aca es donde se guarda la fecha seleccionada
+  const [emotions, setEmotions] = useState<{ [date: string]: string }>({}); //Se guarda las emociones en un objeto con la fecha como key
+
+  const handleDateSelect = (date: string) => { //Funcion que se encarga de guardar la fecha seleccionada
+    setSelectedDate(date);
+  };
+
+  const handleSaveEmotion = async (date: string, emotion: string) => { //Función que se llama cuando se guarda una emoción. Actualiza el estado emotions y guarda los datos en AsyncStorage.
+    const newEmotions = { ...emotions, [date]: emotion };
+    setEmotions(newEmotions);
+    await AsyncStorage.setItem('emotions', JSON.stringify(newEmotions));
+  };
+
+  const loadEmotions = async () => { //Se encarga de cargar las emociones guardadas en AsyncStorage y actualizarlas 
+    const storedEmotions = await AsyncStorage.getItem('emotions');
+    if (storedEmotions) {
+      setEmotions(JSON.parse(storedEmotions));
+    }
+  };
+
+  useEffect(() => { // se carfa las emociones almacenadas 
+
+
+
+
+    loadEmotions();
+  }, []);
+  
   return (
     <View style={styles.container}>
       <Calendario emotions={emotions} onDateSelect={handleDateSelect} />

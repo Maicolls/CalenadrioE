@@ -1,0 +1,1 @@
+@react-native-async-storage/async-storage: esto sirve para almacenar los datos de manera  persistente en movil 

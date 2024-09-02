@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 export default Calendario; */
 
-import React from 'react';
+/* import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
@@ -105,5 +105,27 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default Calendario; */
+
+import React from 'react';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+
+interface CalendarioProps {
+  emotions: { [date: string]: string };
+  onDateSelect: (date: string) => void;
+}
+
+const Calendario: React.FC<CalendarioProps> = ({ emotions, onDateSelect }) => {
+  return (
+    <Calendar
+      onDayPress={(day: { dateString: string; }) => onDateSelect(day.dateString)}
+      markedDates={Object.keys(emotions).reduce((acc, date) => {
+        acc[date] = { marked: true, dotColor: 'blue' };
+        return acc;
+      }, {})}
+    />
+  );
+};
 
 export default Calendario;
